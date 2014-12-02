@@ -1,0 +1,11 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - set_fact: 
+        playtwo: played
+    - name: playone, within a 'sub' playbook
+      debug: var=playone
+      failed_when: playone != 'played'
+    - name: roleone, within a 'sub' playbook
+      debug: var=roleone
+      failed_when: roleone != 'played'

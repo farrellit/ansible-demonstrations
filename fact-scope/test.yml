@@ -1,0 +1,31 @@
+- hosts: localhost
+  gather_facts: false
+  tasks: 
+    - set_fact: 
+        playone: played
+# this would fail; role runs before task.
+#  roles: 
+#    - factrole 
+
+# this passes because the fact is set
+- hosts: localhost
+  gather_facts: false
+  roles: 
+    - factrole 
+    - factrole2
+
+- include: subplay.yml
+
+- hosts: localhost 
+  gather_facts: false
+  tasks:  
+    - name: playtwo fact at top level playbook
+      debug: var=playtwo
+      failed_when: playtwo != 'played'
+    - name: roleone fact at top level playbook
+      debug: var=roleone
+      failed_when: roleone != 'played'
+    - name: roletwo fact at top level playbook
+      debug: var=roletwo
+      failed_when: roletwo != 'played'
+      

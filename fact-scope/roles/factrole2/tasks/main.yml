@@ -1,0 +1,6 @@
+---
+- set_fact: 
+    roletwo: played
+- name: role fact from another role
+  debug: var=roleone
+  failed_when: roleone != 'played'
