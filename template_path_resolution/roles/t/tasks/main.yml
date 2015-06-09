@@ -1,0 +1,4 @@
+---
+- template: 
+    src: "{{ t_template }}"
+    dest: /tmp/tpl

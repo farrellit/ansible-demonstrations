@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  roles:
+  - role: t
+    t_template: templates/t2.j2
+
