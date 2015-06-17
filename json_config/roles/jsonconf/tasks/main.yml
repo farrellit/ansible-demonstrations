@@ -1,0 +1,4 @@
+---
+- copy:
+    content: "{{ a_settings | to_json }}"
+    dest: /tmp/settings
