@@ -1,0 +1,33 @@
+- hosts: localhost
+  gather_facts: false
+  sudo: false
+  vars:
+    preferred_availability_zones: [ 'a', 'b' ] 
+    azs: [ 'us-east-1a', 'us-east-1b', 'us-east-1d' ]
+    subnets: [ 'subnet-aaaaaaaa', 'subnet-bbbbbbb', 'subnet-dddddddd' ]
+    region: 'us-east-1' 
+  tasks: 
+# get full AZ name list with region prepended
+  - set_fact: 
+      preferred_az_name: "{{region}}{{item}}"
+    with_items: '{{preferred_availability_zones}}'
+    register: preferred_az_names
+#  - debug: var=preferred_az_names
+  - set_fact: 
+      preferred_availability_zones: "{{ preferred_az_names.results | map(attribute='ansible_facts.preferred_az_name') | list }}"
+#  - debug: var=preferred_availability_zones
+# filter list of AZs and Subnets base on whether the AZ is in the preferred list
+  - set_fact: 
+      zone: "{{item.0}}"
+      subnet: "{{item.1}}"
+    when: ( [ "{{item.0}}" ] ) | intersect( preferred_availability_zones ) | length > 0 
+    with_together: 
+    - "{{azs}}"
+    - "{{subnets}}"
+    register: zones_and_subnets
+  - debug: var=zones_and_subnets
+  - set_fact: 
+      AvailabilityZones: "{{ zones_and_subnets.results | map( attribute='ansible_facts' ) | list | difference(['Undefined']) }}"
+      Subnets: "{{ zones_and_subnets.results | map( attribute='ansible_facts') | list | difference(['Undefined']) }} "
+    register: end_results
+  - debug: var=end_results
