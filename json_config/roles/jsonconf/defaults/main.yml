@@ -1,5 +1,5 @@
 a_setting: default setting value
-a_boolean: True
+a_boolean: true
 a_settings:
   setting: '{{a_setting}}'
-  boolean: '{{ a_boolean }}'
+  boolean: '{{ a_boolean | bool}}'

@@ -12,10 +12,10 @@
       preferred_az_name: "{{region}}{{item}}"
     with_items: '{{preferred_availability_zones}}'
     register: preferred_az_names
-#  - debug: var=preferred_az_names
+  - debug: var=preferred_az_names
   - set_fact: 
       preferred_availability_zones: "{{ preferred_az_names.results | map(attribute='ansible_facts.preferred_az_name') | list }}"
-#  - debug: var=preferred_availability_zones
+  - debug: var=preferred_availability_zones
 # filter list of AZs and Subnets base on whether the AZ is in the preferred list
   - set_fact: 
       zone: "{{item.0}}"
@@ -27,7 +27,7 @@
     register: zones_and_subnets
   - debug: var=zones_and_subnets
   - set_fact: 
-      AvailabilityZones: "{{ zones_and_subnets.results | map( attribute='ansible_facts' ) | list | difference(['Undefined']) }}"
-      Subnets: "{{ zones_and_subnets.results | map( attribute='ansible_facts') | list | difference(['Undefined']) }} "
+      AvailabilityZones: "{{ zones_and_subnets.results | selectattr( 'ansible_facts', 'defined' ) | map(attribute='ansible_facts.zone') | list  }}"
+      Subnets: "{{ zones_and_subnets.results | selectattr( 'ansible_facts', 'defined' ) | map(attribute='ansible_facts.subnet') | list  }}"
     register: end_results
   - debug: var=end_results
