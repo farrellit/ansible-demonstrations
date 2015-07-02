@@ -1,0 +1,12 @@
+- hosts: localhost
+  sudo: false
+  gather_facts: false
+  vars: 
+    inner_json: "{{ lookup('file', 'inner.data') }}"
+  tasks:
+  - debug: var=inner_json
+  - template: 
+      src: template.json.j2
+      dest: /tmp/template.json
+  - command: python -mjson.tool /tmp/template.json
+    changed_when: false
