@@ -1,0 +1,10 @@
+- hosts: localhost
+  sudo: false
+  gather_facts: false
+  tasks:
+    - set_fact:   
+        undefvar: "{{ lookup('env', 'UNDEFINED') }}"
+        undefvardefault: "{{ lookup('env', 'UNDEFINED') | default('defaultvalue')}}"
+    - debug: var=undefvar
+    - debug: var=undefvardefault
+    
