@@ -2,7 +2,10 @@
   sudo: false
   gather_facts: false
   vars: 
-    inner_json: "{{ lookup('file', 'inner.data') }}"
+    #inner_json: "{{ lookup('file', 'inner.data') }}"
+    inner_json: "I am a \"normal\" string!!!!"
+    more_json: '{ "Fn::Join": [ "", [ "arn:aws:s3:::sps-{{environ}}-datastore/catalog-audit/logs/", { "Ref": "AWS::StackId" } ] ] }'
+    bool_value: true
   tasks:
   - debug: var=inner_json
   - template: 
