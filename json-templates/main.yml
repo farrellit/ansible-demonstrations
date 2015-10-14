@@ -6,6 +6,9 @@
     inner_json: "I am a \"normal\" string!!!!"
     more_json: '{ "Fn::Join": [ "", [ "arn:aws:s3:::sps-{{environ}}-datastore/catalog-audit/logs/", { "Ref": "AWS::StackId" } ] ] }'
     bool_value: true
+    block_data: |
+      hi world!
+      I have many "special" characters, and several lines!  I should be written as a json string, escaped.  
   tasks:
   - debug: var=inner_json
   - template: 
