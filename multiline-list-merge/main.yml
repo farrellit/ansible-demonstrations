@@ -1,0 +1,11 @@
+- hosts: localhost
+  gather_facts: false
+  sudo: false
+  vars:
+    userdata:
+      - '#!/bin/bash'
+      - 'echo "hello, '
+      - { "Ref": "AWS::AccountId" }
+      - '!"'
+  tasks:
+  - template: src=src.json.j2 dest=/tmp/dest.json

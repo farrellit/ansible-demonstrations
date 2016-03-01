@@ -1,0 +1,5 @@
+- hosts: localhost
+  gather_facts: false
+  sudo: false
+  tasks:
+  - debug: var=external
