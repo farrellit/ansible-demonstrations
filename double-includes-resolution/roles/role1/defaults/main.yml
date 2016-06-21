@@ -1,0 +1,4 @@
+var1: 
+    env1: foo
+    env2: fuz
+var2: "{{var1[environ]}}bar"

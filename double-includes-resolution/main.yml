@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  sudo: false
+  roles:
+  - role: role1
+    environ: env1

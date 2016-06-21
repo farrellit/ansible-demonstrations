@@ -1,0 +1,2 @@
+- debug: msg="Role 2"
+- debug: var=var2
