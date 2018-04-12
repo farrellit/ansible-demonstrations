@@ -1,0 +1,14 @@
+- hosts: localhost
+  gather_facts: false
+  vars:
+    kvtags:
+      Name: my-app
+      sps:env: dev
+      sps:hours_of_operation: 1100-2300,M-F,start
+    taglist: []
+  tasks:
+    - set_fact: 
+        taglist:  "{{taglist|union([{'Key':item.key,'Value':item.value}])}}"
+      with_dict: "{{ kvtags }}"
+    - debug: var=kvtags
+    - debug: var=taglist
