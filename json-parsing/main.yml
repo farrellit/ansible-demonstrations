@@ -1,0 +1,14 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: get json output
+      command: "./json_outputter.py"
+      register: output
+    - name: raw output
+      debug: var=output
+    - name: "lookup maddie, getting json of sub-object"
+      debug: 
+        msg: "{{ (output.stdout | from_json)['people']['maddie'] | to_json }}"
+    - name: "Lookup maddie's age in years"
+      debug: 
+        msg: "{{ (output.stdout | from_json).people.maddie.age |float / 12 }}"
