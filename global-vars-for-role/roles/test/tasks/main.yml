@@ -1,0 +1,4 @@
+- name: debug global var
+  debug: var=myvar
+- name: debug per-role var
+  debug: var=myrolevar

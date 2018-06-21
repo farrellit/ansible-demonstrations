@@ -1,0 +1,9 @@
+- hosts: localhost
+  sudo: false
+  gather_facts: false
+  vars: 
+    myvar: "I am a globally defined playbook var"
+  roles:
+    - role: test
+      vars: 
+        myrolevar: "I was defined for a particular role"
