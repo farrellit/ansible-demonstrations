@@ -1,0 +1,17 @@
+- hosts: localhost
+  become: false
+  vars:
+    Environment: dev
+    s3_repos:
+      West2:
+        bucket_prefix: first-prefix
+        region: us-west-2
+      East1:
+        bucket_prefix: second-prefix
+        region: us-east-1
+    
+  tasks:
+    - set_fact: 
+        s3_repos: "{{s3_repos|combine({item:{'bucket':s3_repos[item].bucket_prefix + '-' + s3_repos[item].region + '-' + Environment } }, recursive=True) }}"
+      with_items: "{{s3_repos.keys()|list}}"
+    - debug: var=s3_repos
