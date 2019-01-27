@@ -1,0 +1,8 @@
+- shell: pwd
+  register: shellout
+- debug: var=shellout
+- shell: pwd
+  args:
+    chdir: "{{role_path}}"
+  register: shellout2
+- debug: var=shellout2

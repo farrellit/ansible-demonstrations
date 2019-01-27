@@ -1,0 +1,5 @@
+- hosts: localhost
+  sudo: false
+  gather_facts: false
+  roles:
+    - shelldir
