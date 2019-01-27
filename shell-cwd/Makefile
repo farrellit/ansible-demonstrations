@@ -1,2 +1,2 @@
 run:
-	docker run -v `pwd`:/code --rm -it farrellit/ansible2 ansible-playbook -i hosts main.yml
+	docker run -v `pwd`:/code --rm -it --workdir /tmp farrellit/ansible2 ansible-playbook -i hosts /code/main.yml
